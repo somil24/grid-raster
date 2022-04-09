@@ -1,34 +1,36 @@
-import React, { useEffect } from "react";
-import { io } from "socket.io-client";
+// lib
+import React, { useEffect ,useState} from "react";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+// api
+import { getGraphData } from "../api/getGraphData";
 
 
-const socket = io("ws://localhost:5000");
+
 
 const App = ()=>{
 
-    const [Data, setData] = React.useState([]);
+    const [Data, setData] = useState([]);
 
 
    useEffect(()=>{
-
-    socket.on("graphData", (arg) => {
-        setData(arg) // world
-      });
+     setData(getGraphData())
    },[]);
     
 
 
     return(
-        <>
-        <LineChart width={1500} height={300} data={Data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <XAxis dataKey="name" />
-        <YAxis />
-      </LineChart>
-      </>
+        
+       <LineChart width={730} height={250} data={Data}
+  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="name" />
+  <YAxis />
+  <Tooltip />
+  <Legend />
+  <Line type="monotone" dataKey="value" stroke="#8884d8" />
+</LineChart>
+      
     );
 }
 

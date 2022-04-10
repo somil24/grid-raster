@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { io } from "socket.io-client";
-import {Container,Typography} from "@mui/material"
+import {Alert, AlertTitle, Container,Typography} from "@mui/material"
 
 //colors
 import { COLORS } from "../constants/colors/chartColors"
@@ -21,15 +21,14 @@ const App = () => {
 
   useEffect(() => {
     socket.on("graphData", (arg) => {
-      setData(arg);
+       setData(arg);
     })
     socket.on("message",(arg)=>{
       setMsg(arg);
     })
   }, []);
-
   return (
-<Container height="100vh" sx={{justifyContent:"center",alignItems:"center"}}>
+<Container height="100vh" sx={{justifyContent:"center",alignItems:"center",padding:"100px"}}>
     <Typography variant="h4" textAlign="center" gutterBottom>Covid Cases Data</Typography>
     <LineChart width={1200} height={500} data={Data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -49,7 +48,10 @@ const App = () => {
     </LineChart>
     {
       msg.length>0&&(
-        <div className="alert alert-info" role="alert">{msg}</div>
+        <Alert severity="info">
+  <AlertTitle>Info</AlertTitle>
+  {msg} — <strong>check it out!</strong>
+</Alert>
       )
     }
 </Container>

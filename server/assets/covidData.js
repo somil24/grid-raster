@@ -30,9 +30,6 @@ source.pipe(
     })
     .on("done", () => {
       console.log("Converted csv to json");
-      
-      // write to the file 'result.json'
-       fs.writeFileSync("result.json", JSON.stringify(result));
     })
 );
 return result;

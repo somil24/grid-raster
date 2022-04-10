@@ -1,7 +1,7 @@
 
 const Server = require("socket.io");
 const csvToJson = require("convert-csv-to-json");
-
+const covidData=require("./assets/covidData")
 const io =  Server(5000, {
   cors: {
     origin: "*",
@@ -9,28 +9,22 @@ const io =  Server(5000, {
 });
 
 
-const json = csvToJson.getJsonFromCsv("./assets/covid_data.csv");
-console.log(json);
+let index=0;
+const GRAPHDATA=[]
+setTimeout(()=>{
+  const DATA=covidData();
+  io.on("connection", async (socket) => {
 
-let index = 0;
-io.on("connection", async (socket) => {
-  setInterval(() => {
-    if (index < json.length) {
-      socket.emit("graphData", json[index++]);
-    } else return;
-  }, 2000);
-});
-//const result = JSON.parse(JSON.stringify(RESULT));
-//console.log(result);
+    setInterval(() => {
+      if(index == DATA.length) {
+        socket.emit("message","No more Data is available")
+        return;
+      }
+GRAPHDATA.push(DATA[index])
+index++;
+      socket.emit("graphData", GRAPHDATA);
+  
+    },10)
+  });
 
-// let index=0;
-// io.on("connection", async (socket) => {
-
-//   setInterval(() => {
-//     if(index == DATA.length) return;
-//     const data = [];
-//     data.push(DATA[index++]);
-//     socket.emit("graphData", data);
-
-//   },2000)
-// });
+},2000)

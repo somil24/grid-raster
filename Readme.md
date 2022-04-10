@@ -19,7 +19,7 @@
 Create a webpage that can plot live chart from a given data source
 
 ## Solution
-I downloaded a dataset of COVID 19 cases and wrote a script and connected it with socket which gives data for a new day after every 100ms
+I downloaded a dataset of COVID 19 cases and wrote a script and connected it with socket which gives data for a new day after every 10ms
 
 
 

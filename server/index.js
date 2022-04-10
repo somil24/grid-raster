@@ -1,17 +1,24 @@
-import { Server } from "socket.io";
 
-const io = new Server(5000, {
+const Server = require("socket.io");
+const covidData=require('./assets/covidData');
+const RESULT = require("./result");
+
+const io =  Server(5000, {
   cors: {
     origin: "*",
   }
 });
 
-io.on("connection", (socket) => {
+const result = JSON.parse(JSON.stringify(RESULT));
+console.log(result);
+let index=0;
+io.on("connection", async (socket) => {
 
   setInterval(() => {
-    const data = [{name: 'a', value: 10*Math.random()}, {name: 'b', value: 100*Math.random()}, {name: 'c', value: 1000*Math.random()}];
-   
+    if(index == DATA.length) return;
+    const data = [];
+    data.push(DATA[index++]);
     socket.emit("graphData", data);
 
-  },1000)
+  },2000)
 });

@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csvtojson": "^2.0.10",
+    "fs": "^0.0.1-security",
     "nodemon": "^2.0.15",
     "socket.io": "^4.4.1"
-  },
-  "type":"module"
+  }
 }
